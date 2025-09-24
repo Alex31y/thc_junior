@@ -1,0 +1,33 @@
+# Start with:
+#   docker compose pull
+#   docker compose down --volumes
+#   docker compose up --build
+
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:16.1-alpine
+    container_name: postgres
+    healthcheck: { test: ["CMD-SHELL", "pg_isready -h localhost -U ${POSTGRES_USERNAME:-dnl}"], interval: 10s, timeout: 5s, retries: 5 }
+    ports: ['5432:5432']
+    environment:
+      POSTGRES_USER: '${POSTGRES_USERNAME:-dnl}'
+      POSTGRES_HOST_AUTH_METHOD: "trust"
+  scraper:
+    build: .
+    depends_on:
+      postgres: { condition: service_healthy, restart: true }
+    restart: "no"
+    environment:
+      DATABASE_URL: "postgresql://dnl@postgres/dnl"
+    command: poetry run -- python3 -m catalogue.scraper
+  api:
+    build: .
+    depends_on:
+      postgres: { condition: service_healthy, restart: true }
+    restart: "always"
+    ports: ['8000:8000']
+    environment:
+      DATABASE_URL: "postgresql://dnl@postgres/dnl"
+    command: poetry run -- uvicorn --host 0.0.0.0 catalogue.api:app

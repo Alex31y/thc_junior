@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "catalogue"
+version = "0.1.0"
+description = "DNL Backend Coding Challenge"
+authors = ["Christoph Schiessl <cs@bugfactory.io>"]
+license = "Proprietary"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "~3.11.2"
+# TODO Latest playwright version doesn't work, because it's running into the following bug:
+# https://github.com/microsoft/playwright/issues/28503
+# The bug is already fixed, so updating to the latest version *should* be possible once 1.41.0
+# has been released.
+playwright = "~1.38.0"
+fastapi = "^0.108.0"
+uvicorn = "^0.25.0"
+sqlalchemy = {extras = ["postgresql"], version = "^2.0.25"}
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.4"
+httpx = "^0.26.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

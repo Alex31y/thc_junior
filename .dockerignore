@@ -1,0 +1,7 @@
+.git
+**/__pycache__
+.tool-versions
+Dockerfile
+docker-compose.yml
+.pytest_cache
+tests/
