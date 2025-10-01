@@ -23,7 +23,7 @@ async def fetch_manufacturers(
     return schemas.ManufacturersResponse(
         meta=schemas.Meta(
             current_page=page,
-            page_count=math.ceil(filtered.count() / per_page) + 1,
+            page_count=math.ceil(filtered.count() / per_page),
         ),
         manufacturers=paginated.all(),
     )
@@ -44,7 +44,7 @@ async def fetch_manufacturer_categories(
     return schemas.CategoriesResponse(
         meta=schemas.Meta(
             current_page=page,
-            page_count=math.ceil(filtered.count() / per_page) + 1,
+            page_count=math.ceil(filtered.count() / per_page),
         ),
         categories=paginated.all(),
     )
@@ -65,7 +65,7 @@ async def fetch_category_models(
     return schemas.ModelsResponse(
         meta=schemas.Meta(
             current_page=page,
-            page_count=math.ceil(filtered.count() / per_page) + 1,
+            page_count=math.ceil(filtered.count() / per_page),
         ),
         models=paginated.all(),
     )
@@ -86,7 +86,7 @@ async def fetch_model_parts(
     return schemas.PartsResponse(
         meta=schemas.Meta(
             current_page=page,
-            page_count=math.ceil(filtered.count() / per_page) + 1,
+            page_count=math.ceil(filtered.count() / per_page),
         ),
         parts=paginated.all(),
     )
