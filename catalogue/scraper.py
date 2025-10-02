@@ -85,7 +85,7 @@ class PartsJob:
         await page.goto(self.target_href)
         for part in await page.locator(".allparts li a").all():
             if (name := await part.text_content()) is not None:
-                elements = name.split("-")
+                elements = name.split("-", 1)
                 part_number = elements[0].strip()
                 part_name = elements[1].strip()
                 db.insert_part(
